@@ -10,6 +10,7 @@ class Program
         try
         {
             AskForFile(ref text, ref path, ref name);
+            CheckParag(ref text);
             ChangeText();
         }
         catch(Exeption ex)
@@ -247,6 +248,47 @@ class Program
             }
         }
     }
+
+    static void CheckParag(ref string text)
+    {
+        text = "<p>" + text;
+        CloseParag(ref text, 0);
+    }
+        
+    static void CloseParag(ref string text, int i)
+    {
+        for (int j = i; j < text.Length; j++)
+        {
+            if (text[j] == '\n')
+            {
+                if (j < text.Length - 3 && text[j + 2] == '\n')
+                {
+                    text = text.Remove(j - 1, 4);
+                    text = text.Insert(j - 1, "</p><p>");
+                    CloseParag(ref text, j);
+                    break;
+                }
+                else if (j == text.Length - 3 && text[j + 2] == '\n')
+                {
+                    text = text.Remove(j - 1, 4);
+                    text = text + "</p>";
+                    break;
+                }
+                else if (j == text.Length - 1)
+                {
+                    text = text.Remove(j - 1, 2);
+                    text = text + "</p>";
+                    break;
+                }
+            }
+            else if (j == text.Length - 1)
+            {
+                text = text + "</p>";
+                break;
+            }
+        }
+    }
+
 
 
 }
