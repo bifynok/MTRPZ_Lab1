@@ -19,7 +19,7 @@ class Program
             Console.WriteLine("File successfuly created!");
             Console.ReadKey();
         }
-        catch(Exeption ex)
+        catch(Exception ex)
         {
             Console.Error.WriteLine("Error: " + ex);
             Console.ReadKey();
