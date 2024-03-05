@@ -50,6 +50,7 @@ class Program
         {
             CheckItalic(ref text, i);
             CheckBold(ref text, i);
+            CheckPref(ref text, ref i);
             CheckMono(ref text, i);
         }
     }
@@ -213,7 +214,39 @@ class Program
         }
     }
 
+    static void CheckPref(ref string text, ref int i)
+    {
+        if (text[i] == '`')
+        {
+            if (i < text.Length - 3 && text[i + 1] == '`' && text[i+2]== '`')
+            {
+                text = text.Remove(i, 3);
+                text = text.Insert(i, "<pre>");
+                ClosePref(ref text, ref i);
+            }
+        }
+    }
 
+    static void ClosePref(ref string text, ref int i)
+    {
+        for (int j = i + 1; j < text.Length; j++)
+        {
+            if (text[j] == '`')
+            {
+                if (j > 2 && text[j - 1] == '`' && text[j - 2] == '`')
+                {
+                    text = text.Remove(j - 2, 3);
+                    text = text.Insert(j - 2, "</pre>");
+                    i = j;
+                    break;
+                }
+            }
+            else if (j == text.Length - 1)
+            {
+                throw new Exception("Unclosed Punctuation");
+            }
+        }
+    }
 
 
 }
