@@ -13,6 +13,10 @@ class Program
             CheckParag(ref text);
             ChangeText();
             CheckIncluded(text);
+            AddHTMLStructure(ref text);
+            CreateHTML(text, path, name);
+            Console.WriteLine("File successfuly created!");
+            Console.ReadKey();
         }
         catch(Exeption ex)
         {
@@ -366,7 +370,27 @@ class Program
         }
     }
 
-
+    static void CreateHTML(string text, string path, string name)
+    {
+        string filePath = path + "\\" + name + ".html";
+        File.WriteAllText(filePath, text);
+    }
+    
+    static void AddHTMLStructure(ref string text)
+    {
+        text =
+@"<!DOCTYPE html>
+<html lang=""en"">
+<head>
+    <meta charset=""UTF-8"">
+    <meta name=""viewport"" content=""width=device-width, initial-scale=1.0"">
+    <title>Document</title>
+</head>
+<body>
+" + text +
+@"</body>
+</html>";
+    }
 
 
 }
