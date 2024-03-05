@@ -20,4 +20,4 @@ All you need to do is specify the full path to your markdown file
 
 ### Revert-commit
 
-This is [revert-commit](https://github.com/bifynok/MTRPZ_Lab1/commits/main/eb1946c)
+This is [revert-commit](https://github.com/bifynok/MTRPZ_Lab1/commit/eb1946ca81a4677b090c887a9c79f56992c9947f)
