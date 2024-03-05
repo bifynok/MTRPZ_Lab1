@@ -50,6 +50,7 @@ class Program
         {
             CheckItalic(ref text, i);
             CheckBold(ref text, i);
+            CheckMono(ref text, i);
         }
     }
 
@@ -160,6 +161,58 @@ class Program
             }
         }
     }
+
+    static void CheckMono(ref string text, int i)
+    {
+        if (text[i] == '`')
+        {
+            if (i < text.Length - 1)
+            {
+                if (char.IsLetterOrDigit(text[i + 1]))
+                {
+                    text = text.Remove(i, 1);
+                    text = text.Insert(i, "<tt>");
+                    CloseMono(ref text, i);
+                }
+                else if (char.IsPunctuation(text[i + 1]) || text[i + 1] == '`')
+                {
+                    text = text.Remove(i, 1);
+                    text = text.Insert(i, "<tt>");
+                    CloseMono(ref text, i);
+                }
+            }
+        }
+    }
+
+    static void CloseMono(ref string text, int i)
+    {
+        for (int j = i + 1; j < text.Length; j++)
+        {
+            if (text[j] == '`')
+            {
+                if (j > 0)
+                {
+                    if (char.IsLetterOrDigit(text[j - 1]))
+                    {
+                        text = text.Remove(j, 1);
+                        text = text.Insert(j, "</tt>");
+                        break;
+                    }
+                    else if (char.IsPunctuation(text[j - 1]) || text[j - 1] == '`' || text[j - 1] == '>')
+                    {
+                        text = text.Remove(j, 1);
+                        text = text.Insert(j, "</tt>");
+                        break;
+                    }
+                }
+            }
+            else if (j == text.Length - 1)
+            {
+                throw new Exception("Unclosed Punctuation");
+            }
+        }
+    }
+
 
 
 
